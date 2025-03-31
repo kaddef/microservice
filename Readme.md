@@ -40,7 +40,48 @@ docker-compose up
 
 ## Environment Variables
 
-Required environment variables are configured in the docker-compose.yaml file. For local development, refer to the individual service documentation.
+1. Copy the example environment files for each service:
+
+```bash
+cp AuthService/.env.example AuthService/.env
+cp AppointmentService/.env.example AppointmentService/.env
+cp NotificationService/.env.example NotificationService/.env
+```
+
+2. Fill in your environment variables in each `.env` file before running the services.
+
+### Auth Service
+```bash
+JWT_SECRET_KEY=your_jwt_secret_key
+DB_HOST=mysql
+DB_PORT=3306
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=auth_service
+```
+
+### Appointment Service
+```bash
+SPRING_PROFILES_ACTIVE=docker  # Use 'local' for local development
+```
+
+### Notification Service
+```bash
+RMQP_URL=amqp://guest:guest@rabbitmq:5672/
+QUEUE_NAME=appointment_notifications
+SERVER_MAIL=your_gmail_address
+APP_PASSWORD=your_gmail_app_password  # Generate from Google Account settings
+```
+
+### MySQL
+```bash
+MYSQL_ROOT_PASSWORD=your_mysql_root_password
+```
+
+> **Note**: For the Gmail APP_PASSWORD, you need to:
+> 1. Enable 2-Step Verification in your Google Account
+> 2. Go to Security → App passwords
+> 3. Generate a new app password for mail
 
 ## License
 

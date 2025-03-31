@@ -12,11 +12,8 @@ WORKDIR /root/
 
 COPY --from=builder /app/mail-service .
 
-EXPOSE 8001
+COPY --from=builder /app/.env .
 
-ENV RMQP_URL=amqp://guest:guest@localhost:5672/
-ENV QUEUE_NAME=Testo
-ENV SERVER_MAIL=erkanerdil016@gmail.com
-ENV APP_PASSWORD="geix nrml yhka vcuk"
+EXPOSE 8001
 
 CMD ["./mail-service"]

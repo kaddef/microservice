@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  auth_service:
+    build: ./AuthService
+    container_name: auth-service
+    ports:
+      - "8000:8000"
+    networks:
+      - microservices-network
+    depends_on:
+      - mysql
+    env_file: ./AuthService/.env
+
+  appointment-service:
+    build: ./AppointmentService
+    container_name: appointment-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservices-network
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  mail-service:
+    build: ./NotificationService
+    container_name: mail-service
+    ports:
+      - 9090:9090
+    env_file: ./NotificationService/.env
+    networks:
+      - microservices-network
+    depends_on:
+      - rabbitmq
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=kaddef
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microservices-network
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

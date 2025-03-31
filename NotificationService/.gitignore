@@ -1,0 +1,28 @@
+# Go binaries
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+*.a
+
+# Go build artifacts
+*.o
+*.obj
+bin/
+pkg/
+dist/
+vendor/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# Logs and temp files
+*.log
+*.tmp
+*.cache
+
+# Environment files
+.env

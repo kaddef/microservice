@@ -43,7 +43,5 @@ public class AvailabilityController {
         Long id = (long) 10; // We are going to get this id from jwt after we authenticate user from authservice
         boolean result = availabilityService.updateAvailabilitySettings(availabilitySettingDTO, id);
         return ResponseEntity.ok("Data updated successfully");
-
-        // TODO: HERE
     }
 }
